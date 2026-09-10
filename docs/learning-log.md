@@ -5,7 +5,7 @@
 ## 템플릿
 
 ```md
-## YYYY-MM-DD
+## N주차
 
 ### 주제
 
@@ -28,7 +28,7 @@
 ### 다음 행동
 ```
 
-## 2026-09-10
+## 1주차
 
 ### 주제
 
@@ -47,6 +47,7 @@ Week 1 — Backend, HTTP, NestJS Fundamentals
 
 - 처음에는 Module, Controller, Service를 각각 왜 나누는지보다 생성된 파일과 데코레이터 문법을 이해하는 데 집중했다.
 - TypeScript의 요청 body 타입 선언만으로 런타임 입력도 검증될 수 있다고 혼동할 여지가 있었다. 현재 `@Body() body: { title: string; description: string }`는 컴파일 시점 타입일 뿐, 실제 요청을 검증하지 않는다.
+- 빈 문자열처럼 요청값이 유효하지 않은 경우에 `404 Not Found`를 사용할 수 있다고 생각했다. 요청 형식이나 값이 잘못된 경우는 `400 Bad Request`이고, `404 Not Found`는 요청한 리소스를 찾을 수 없는 경우다.
 
 ### How my understanding changed
 
@@ -58,6 +59,7 @@ NestJS 코드를 파일별로 외우기보다 요청이 `Client -> HTTP server -
 - `GET /health`를 구현해 `200 OK`와 `{ "status": "ok" }` 응답을 확인했다.
 - 메모리 배열 기반의 `GET /gatherings`와 `POST /gatherings`를 구현했다.
 - `POST /gatherings`로 생성한 모임이 `GET /gatherings` 결과에 포함되는 것을 `curl`로 확인했다.
+- `{}`를 `POST /gatherings`로 전송했을 때 `201 Created`와 `id`, `createdAt`만 포함된 응답이 반환되는 것을 확인했다. 이후 `GET /gatherings`에서도 `title`, `description`이 없는 데이터가 저장된 상태를 확인했다.
 - 생성 시 `randomUUID()`로 `id`를 만들고 `new Date().toISOString()`으로 `createdAt`을 기록했다.
 
 ### What failed
@@ -78,10 +80,11 @@ Week 1의 목표는 DB나 완성된 API 설계가 아니라 HTTP 요청이 Contr
 - NestJS DI container는 Provider 인스턴스를 언제 생성하고 기본적으로 어느 범위까지 재사용하는가?
 - `NestFactory.create()`가 application과 HTTP adapter를 초기화하는 과정은 어떻게 구성되는가?
 - DTO와 ValidationPipe를 적용하면 실패 요청의 응답 형태와 상태 코드는 어떻게 결정되는가?
+- Gathering의 `title`은 실제로 고유해야 하는 값인가? 고유한 값이라면 중복 생성은 `409 Conflict` 후보지만, 고유하지 않다면 같은 제목만으로 충돌 처리해서는 안 된다.
 - Service unit test와 API e2e test는 각각 어떤 동작을 보호해야 하는가?
 
 ### 다음 행동
 
-- Week 1 요구사항에 맞춰 잘못된 `POST /gatherings` 요청이 현재 어떻게 처리되는지 직접 호출하고 결과를 확인한다.
-- Week 2를 시작하기 전에 요청 DTO와 runtime validation의 차이를 설명할 수 있도록 정리한다.
+- Week 2에서 Gathering 생성 API의 request, response, status code와 error case를 먼저 설계한다.
+- 생성 요청 DTO와 ValidationPipe를 적용해 잘못된 요청이 Service에 도달하기 전에 `400 Bad Request`로 차단되는지 검증한다.
 - 이후 학습 단계에서 메모리 저장소를 PostgreSQL과 Prisma 기반 영속 저장소로 교체한다.
