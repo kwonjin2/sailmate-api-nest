@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
+import { CreateGatheringDto } from './gatherings/dto/create-gathering.dto';
 
 @Controller()
 export class AppController {
@@ -23,7 +24,10 @@ export class AppController {
   }
 
   @Post('gatherings')
-  postGatherings(@Body() body: { title: string; description: string }) {
-    return this.appService.postGatherings(body.title, body.description);
+  postGatherings(@Body() createGatheringDto: CreateGatheringDto) {
+    return this.appService.postGatherings(
+      createGatheringDto.title,
+      createGatheringDto.description,
+    );
   }
 }
