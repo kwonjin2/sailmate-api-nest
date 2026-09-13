@@ -30,6 +30,13 @@
 
 ## 1주차
 
+### 종료 확인
+
+- 커리큘럼의 Acceptance Criteria와 Verification을 모두 충족했다. 상세 근거는 [학습 진행 판정](learning-progress.md)에 기록한다.
+- GET /gatherings 요청이 Controller 메서드에서 Service를 호출하고 반환 결과가 클라이언트 응답으로 이어지는 흐름을 직접 설명했다.
+- 서버 터미널에서 `Found 0 errors`, `AppModule dependencies initialized`, GET/POST 라우트 등록과 `Nest application successfully started`를 확인했다. curl 출력은 클라이언트가 받은 HTTP 응답이며 서버 프로세스 로그와 구분한다.
+- 아래 내용은 1주차 당시 구현과 한계를 기록한 것이며, 이후 DTO와 ValidationPipe 실습은 2주차 선행 성과로 관리한다.
+
 ### 주제
 
 Week 1 — Backend, HTTP, NestJS Fundamentals
